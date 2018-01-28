@@ -118,3 +118,7 @@ Initial stable release
 
 ## 26/1/2018
 - #581, onBlur not firing.
+
+## 28/01/2018 Fork 1.12.8
+- Editor adaptive
+

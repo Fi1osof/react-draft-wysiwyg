@@ -1,5 +1,7 @@
 # React Draft Wysiwyg
 
+Fork from https://github.com/jpuri/react-draft-wysiwyg
+
 A Wysiwyg editor built using ReactJS and DraftJS libraries.
 [Demo Page](https://jpuri.github.io/react-draft-wysiwyg).
 
