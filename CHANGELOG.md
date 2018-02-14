@@ -132,3 +132,6 @@ Initial stable release
 
 # 1.13.1
 - Moved images into src
+
+# 1.13.2
+- Fix
