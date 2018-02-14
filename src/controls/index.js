@@ -12,7 +12,7 @@ import image from './Image';
 import remove from './Remove';
 import history from './History';
 
-module.exports = {
+const controls = {
   inline,
   blockType,
   fontSize,
@@ -27,3 +27,5 @@ module.exports = {
   remove,
   history,
 };
+
+export default controls;

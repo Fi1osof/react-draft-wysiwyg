@@ -126,3 +126,6 @@ Initial stable release
 # 1.12.9
 - Do not render toolbar on readOnly
 
+# 1.13.0
+- Migrate sources on nwb
+- Code refactoring

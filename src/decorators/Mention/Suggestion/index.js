@@ -258,4 +258,4 @@ function getSuggestionComponent() {
   };
 }
 
-module.exports = Suggestion;
+export default Suggestion;

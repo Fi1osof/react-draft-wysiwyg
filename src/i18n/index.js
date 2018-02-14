@@ -12,7 +12,7 @@ import zh_tw from './zh_tw';
 import pl from './pl';
 import es from './es';
 
-module.exports = {
+const localeTranslations = {
   en,
   fr,
   zh,
@@ -27,3 +27,5 @@ module.exports = {
   pl,
   es
 };
+
+export default localeTranslations;

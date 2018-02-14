@@ -28,7 +28,7 @@ const mergeRecursive = (obj1, obj2) => {
   return mergedValue;
 };
 
-module.exports = {
+export {
   getFirstIcon,
   mergeRecursive,
 };
