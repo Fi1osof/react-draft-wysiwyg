@@ -1,10 +1,11 @@
 {
   "name": "@fi1osof/react-draft-wysiwyg",
-  "version": "1.13.3",
+  "version": "1.13.5",
   "description": "@fi1osof/react-draft-wysiwyg React component",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
+    "images",
     "css",
     "es",
     "lib",
