@@ -129,3 +129,6 @@ Initial stable release
 # 1.13.0
 - Migrate sources on nwb
 - Code refactoring
+
+# 1.13.1
+- Moved images into src
