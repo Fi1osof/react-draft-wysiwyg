@@ -6,17 +6,3 @@
 /umd
 npm-debug.log*
 /yarn.lock
-/.storybook
-/css
-/docs
-/images
-/interfaces
-/js
-/stories
-/.babelrc
-/.eslintignore
-/.eslintrc
-/.flowconfig
-/.travis.yml
-/.gitignore
-/.npmignore
