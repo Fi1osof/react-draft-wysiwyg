@@ -15,6 +15,7 @@ import {
   handleNewLine,
   blockRenderMap,
   getCustomStyleMap,
+  // extractInlineStyle as extractInlineStyle2,
   extractInlineStyle,
   getSelectedBlocksType,
 } from 'draftjs-utils';
@@ -36,6 +37,32 @@ import defaultToolbar from '../config/defaultToolbar';
 import localeTranslations from '../i18n';
 import './styles.css';
 import '../../css/Draft.css';
+
+// function extractInlineStyle(editorState) {
+//   if (editorState) {
+//     const styleList = editorState.getCurrentContent().getBlockMap().map(block => block.get('characterList')).toList().flatten();
+
+//     // console.log("styleList", styleList);
+//     // console.log("styleList characterList", editorState.getCurrentContent().getBlockMap().map(block => block.get('characterList')).toList());
+//     // console.log("styleList getCurrentContent", editorState.getCurrentContent());
+
+//     extractInlineStyle2(editorState);
+
+//     // styleList.forEach(style => {
+//     //   if (style && style.indexOf('color-') === 0) {
+//     //     addToCustomStyleMap('color', 'color', style.substr(6));
+//     //   } else if (style && style.indexOf('bgcolor-') === 0) {
+//     //     addToCustomStyleMap('bgcolor', 'backgroundColor', style.substr(8));
+//     //   } else if (style && style.indexOf('fontsize-') === 0) {
+//     //     addToCustomStyleMap('fontSize', 'fontSize', +style.substr(9));
+//     //   } else if (style && style.indexOf('fontfamily-') === 0) {
+//     //     addToCustomStyleMap('fontFamily', 'fontFamily', style.substr(11));
+//     //   }
+//     // });
+
+//     console.log("styleList getCustomStyleMap", getCustomStyleMap());
+//   }
+// }
 
 export default class WysiwygEditor extends Component {
   static propTypes = {
@@ -115,7 +142,7 @@ export default class WysiwygEditor extends Component {
     this.customStyleMap = getCustomStyleMap();
   }
 
-  componentWillMount(): void {
+  componentWillMount() {
     this.compositeDecorator = this.getCompositeDecorator();
     const editorState = this.createEditorState(this.compositeDecorator);
     extractInlineStyle(editorState);
@@ -124,7 +151,7 @@ export default class WysiwygEditor extends Component {
     });
   }
 
-  componentDidMount(): void {
+  componentDidMount() {
     this.modalHandler.init(this.wrapperId);
   }
   // todo: change decorators depending on properties recceived in componentWillReceiveProps.
@@ -162,13 +189,13 @@ export default class WysiwygEditor extends Component {
     this.customStyleMap = getCustomStyleMap();
   }
 
-  onEditorBlur: Function = (): void => {
+  onEditorBlur = () => {
     this.setState({
       editorFocused: false,
     });
   };
 
-  onEditorFocus: Function = (event): void => {
+  onEditorFocus = (event) => {
     const { onFocus } = this.props;
     this.setState({
       editorFocused: true,
@@ -179,11 +206,11 @@ export default class WysiwygEditor extends Component {
     }
   };
 
-  onEditorMouseDown: Function = (): void => {
+  onEditorMouseDown = () => {
     this.focusHandler.onEditorMouseDown();
   }
 
-  onTab: Function = (event): boolean => {
+  onTab = (event) => {
     const { onTab } = this.props;
     if (!onTab || !onTab(event)) {
       const editorState = changeDepth(this.state.editorState, event.shiftKey ? -1 : 1, 4);
@@ -194,31 +221,31 @@ export default class WysiwygEditor extends Component {
     }
   };
 
-  onUpDownArrow: Function = (event): boolean => {
+  onUpDownArrow = (event) => {
     if (SuggestionHandler.isOpen()) {
       event.preventDefault();
     }
   };
 
-  onToolbarFocus: Function = (event): void => {
+  onToolbarFocus = (event) => {
     const { onFocus } = this.props;
     if (onFocus && this.focusHandler.isToolbarFocused()) {
       onFocus(event);
     }
   };
 
-  onWrapperBlur: Function = (event: Object) => {
+  onWrapperBlur = (event) => {
     const { onBlur } = this.props;
     if (onBlur && this.focusHandler.isEditorBlur(event)) {
       onBlur(event);
     }
   };
 
-  onChange: Function = (editorState: Object): void => {
+  onChange = (editorState) => {
     const { readOnly, onEditorStateChange } = this.props;
     if (!readOnly &&
       !(getSelectedBlocksType(editorState) === 'atomic' &&
-      editorState.getSelection().isCollapsed)) {
+        editorState.getSelection().isCollapsed)) {
       if (onEditorStateChange) {
         onEditorStateChange(editorState, this.props.wrapperId);
       }
@@ -230,18 +257,18 @@ export default class WysiwygEditor extends Component {
     }
   };
 
-  setWrapperReference: Function = (ref: Object): void => {
+  setWrapperReference = (ref) => {
     this.wrapper = ref;
   };
 
-  setEditorReference: Function = (ref: Object): void => {
+  setEditorReference = (ref) => {
     if (this.props.editorRef) {
       this.props.editorRef(ref);
     }
     this.editor = ref;
   };
 
-  getCompositeDecorator = (): void => {
+  getCompositeDecorator = () => {
     const decorators = [...this.props.customDecorators, getLinkDecorator({
       showOpenOptionOnHover: this.state.toolbar.link.showOpenOptionOnHover,
     })];
@@ -267,7 +294,7 @@ export default class WysiwygEditor extends Component {
 
   getSuggestions = () => this.props.mention && this.props.mention.suggestions;
 
-  afterChange: Function = (editorState): void => {
+  afterChange = (editorState) => {
     setTimeout(() => {
       const { onChange, onContentStateChange } = this.props;
       if (onChange) {
@@ -334,15 +361,15 @@ export default class WysiwygEditor extends Component {
     return editorState;
   };
 
-  focusEditor: Function = (): void => {
+  focusEditor = () => {
     setTimeout(() => {
       this.editor.focus();
     });
   };
 
-  handleKeyCommand: Function = (command: Object): boolean => {
+  handleKeyCommand = (command) => {
     const { editorState, toolbar: { inline } } = this.state;
-    if(inline && inline.options.indexOf(command) >= 0) {
+    if (inline && inline.options.indexOf(command) >= 0) {
       const newState = RichUtils.handleKeyCommand(editorState, command);
       if (newState) {
         this.onChange(newState);
@@ -352,7 +379,7 @@ export default class WysiwygEditor extends Component {
     return false;
   };
 
-  handleReturn: Function = (event: Object): boolean => {
+  handleReturn = (event) => {
     if (SuggestionHandler.isOpen()) {
       return true;
     }
@@ -368,11 +395,11 @@ export default class WysiwygEditor extends Component {
     if (this.props.handlePastedText) {
       return this.props.handlePastedText(text, html, editorState, this.onChange);
     }
-    const { editorState } = this.state;    
+    const { editorState } = this.state;
     return handlePastedText(text, html, editorState, this.onChange);
   }
 
-  preventDefault: Function = (event: Object) => {
+  preventDefault = (event) => {
     if (event.target.tagName === 'INPUT' || event.target.tagName === 'LABEL') {
       this.focusHandler.onInputMouseDown();
     } else {
@@ -420,30 +447,30 @@ export default class WysiwygEditor extends Component {
         onBlur={this.onWrapperBlur}
         aria-label="rdw-wrapper"
       >
-          {!readOnly ? 
-            <div>
-              <div
-                className={classNames('rdw-editor-toolbar', toolbarClassName)}
-                style={{ visibility: toolbarShow ? 'visible' : 'hidden', ...toolbarStyle }}
-                onMouseDown={this.preventDefault}
-                aria-label="rdw-toolbar"
-                aria-hidden={(!editorFocused && toolbarOnFocus).toString()}
-                onFocus={this.onToolbarFocus}
-              >
-                {toolbar.options.map((opt, index) => {
-                  const Control = Controls[opt];
-                  const config = toolbar[opt];
-                  if (opt === 'image' && uploadCallback) {
-                    config.uploadCallback = uploadCallback;
-                  }
-                  return <Control key={index} {...controlProps} config={config} />;
-                })}
-                {toolbarCustomButtons && toolbarCustomButtons.map((button, index) =>
-                  React.cloneElement(button, { key: index, ...controlProps }))}
-              </div>
-            </div> : 
-            null
-          }
+        {!readOnly ?
+          <div>
+            <div
+              className={classNames('rdw-editor-toolbar', toolbarClassName)}
+              style={{ visibility: toolbarShow ? 'visible' : 'hidden', ...toolbarStyle }}
+              onMouseDown={this.preventDefault}
+              aria-label="rdw-toolbar"
+              aria-hidden={(!editorFocused && toolbarOnFocus).toString()}
+              onFocus={this.onToolbarFocus}
+            >
+              {toolbar.options.map((opt, index) => {
+                const Control = Controls[opt];
+                const config = toolbar[opt];
+                if (opt === 'image' && uploadCallback) {
+                  config.uploadCallback = uploadCallback;
+                }
+                return <Control key={index} {...controlProps} config={config} />;
+              })}
+              {toolbarCustomButtons && toolbarCustomButtons.map((button, index) =>
+                React.cloneElement(button, { key: index, ...controlProps }))}
+            </div>
+          </div> :
+          null
+        }
         <div
           ref={this.setWrapperReference}
           className={classNames(editorClassName, 'rdw-editor-main')}

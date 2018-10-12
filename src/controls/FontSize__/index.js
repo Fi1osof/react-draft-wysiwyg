@@ -18,12 +18,12 @@ export default class FontSize extends Component {
     translations: PropTypes.object,
   };
 
-  state = {
+  state: Object = {
     expanded: undefined,
     currentFontSize: undefined,
   };
 
-  componentWillMount() {
+  componentWillMount(): void {
     const { editorState, modalHandler } = this.props;
     if (editorState) {
       this.setState({
@@ -34,7 +34,7 @@ export default class FontSize extends Component {
     modalHandler.registerCallBack(this.expandCollapse);
   }
 
-  componentWillReceiveProps(properties) {
+  componentWillReceiveProps(properties: Object): void {
     if (properties.editorState &&
       this.props.editorState !== properties.editorState) {
       this.setState({
@@ -44,38 +44,35 @@ export default class FontSize extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     const { modalHandler } = this.props;
     modalHandler.deregisterCallBack(this.expandCollapse);
   }
 
-  onExpandEvent = () => {
+  onExpandEvent: Function = (): void => {
     this.signalExpanded = !this.state.expanded;
   };
 
-  expandCollapse = () => {
+  expandCollapse: Function = (): void => {
     this.setState({
       expanded: this.signalExpanded,
     });
     this.signalExpanded = false;
   }
 
-  doExpand = () => {
+  doExpand: Function = (): void => {
     this.setState({
       expanded: true,
     });
   };
 
-  doCollapse = () => {
+  doCollapse: Function = (): void => {
     this.setState({
       expanded: false,
     });
   };
 
-  toggleFontSize = (fontSize) => {
-
-    console.log("toggleFontSize", fontSize);
-
+  toggleFontSize: Function = (fontSize: number) => {
     const { editorState, onChange } = this.props;
     const newState = toggleCustomInlineStyle(
       editorState,
@@ -87,12 +84,11 @@ export default class FontSize extends Component {
     }
   };
 
-  render() {
+  render(): Object {
     const { config, translations } = this.props;
     const { expanded, currentFontSize } = this.state;
     const FontSizeComponent = config.component || LayoutComponent;
-    // const fontSize = currentFontSize && Number(currentFontSize.substring(9));
-    const fontSize = currentFontSize && currentFontSize.replace(/^\w*-/, '');
+    const fontSize = currentFontSize && Number(currentFontSize.substring(9));
     return (
       <FontSizeComponent
         config={config}

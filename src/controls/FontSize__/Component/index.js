@@ -19,11 +19,11 @@ export default class LayoutComponent extends Component {
     translations: PropTypes.object,
   };
 
-  state = {
+  state: Object = {
     defaultFontSize: undefined,
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     const editorElm = document.getElementsByClassName('DraftEditor-root');
     if (editorElm && editorElm.length > 0) {
       const editorStyles = window.getComputedStyle(editorElm[0]);
@@ -47,31 +47,13 @@ export default class LayoutComponent extends Component {
     } = this.props;
     let { currentState: { fontSize: currentFontSize } } = this.props;
     let { defaultFontSize } = this.state;
-
-    // defaultFontSize = Number(defaultFontSize);
-    defaultFontSize = defaultFontSize;
-
+    defaultFontSize = Number(defaultFontSize);
     currentFontSize = currentFontSize ||
       (options && options.indexOf(defaultFontSize) >= 0 && defaultFontSize);
-
-    console.log("currentFontSize", currentFontSize);
-
-    // currentFontSize = currentFontSize && typeof currentFontSize === "object" ? currentFontSize.title : currentFontSize;
-
-    if (currentFontSize) {
-      const option = options.find(n => n.size === currentFontSize);
-
-      if (option) {
-        currentFontSize = option.title;
-      }
-      console.log("currentFontSize2", currentFontSize, option);
-    }
-
-
     return (
-      <div className="custom-rdw-fontsize-wrapper" aria-label="custom-rdw-font-size-control">
+      <div className="rdw-fontsize-wrapper" aria-label="rdw-font-size-control">
         <Dropdown
-          className={classNames('custom-rdw-fontsize-dropdown', className)}
+          className={classNames('rdw-fontsize-dropdown', className)}
           optionWrapperClassName={classNames(dropdownClassName)}
           onChange={onChange}
           expanded={expanded}
@@ -85,17 +67,14 @@ export default class LayoutComponent extends Component {
             <img src={icon} alt="" />
           }
           {
-            options.map(({
-              title,
-              size,
-            }, index) =>
+            options.map((size, index) =>
               (<DropdownOption
-                className="custom-rdw-fontsize-option"
+                className="rdw-fontsize-option"
                 active={currentFontSize === size}
                 value={size}
                 key={index}
               >
-                {title}
+                {size}
               </DropdownOption>),
             )
           }

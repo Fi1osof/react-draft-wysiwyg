@@ -33,3 +33,8 @@
   border-radius: 3px;
   padding: 1px 10px;
 }
+
+.public-DraftEditor-content[contenteditable=true]{
+  border: 1px solid #ddd;
+  padding: 0 3px;
+}
