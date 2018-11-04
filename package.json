@@ -1,6 +1,6 @@
 {
   "name": "@fi1osof/react-draft-wysiwyg",
-  "version": "1.13.5",
+  "version": "1.13.6",
   "description": "@fi1osof/react-draft-wysiwyg React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -64,6 +64,7 @@
   "directories": {
     "doc": "docs",
     "lib": "lib",
+    "src": "src",
     "test": "tests"
   },
   "bugs": {
